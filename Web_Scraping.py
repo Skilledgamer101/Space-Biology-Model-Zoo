@@ -5,13 +5,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
-non_irradiated = []
-irradiated = []
+
 
     
     
 
 def scrape(url,label1,label2,end):
+    non_irradiated = []
+    irradiated = []
     # Set up the Selenium WebDriver (specify the path to your WebDriver executable)
     driver = webdriver.Chrome()
     # Navigate to the website
@@ -56,13 +57,9 @@ def scrape(url,label1,label2,end):
         page_source = driver.page_source
         soup = BeautifulSoup(page_source, 'html.parser')
         table = soup.find('table', {'class': 'mat-table cdk-table mat-elevation-z8 table-w100'})
-        
-scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-466" ,"Ground","Space Flight",12)
-scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-524" ,"non-irradiated","Cobalt-60 gamma radiation",6)
-scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-520","non-irradiated","Cesium-137 gamma radiation",8)
-print("Irratiated")
-for string in irradiated:
-   print(string)
-print("Non_irratiated")
-for string in non_irradiated:
-   print(string)
+    return non_irradiated,irradiated
+
+data = {}       
+data["mouse_noRad"],data["mouse_rad"] = scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-466" ,"Ground","Space Flight",12)
+data["fish_noRad"],data["fish_rad"] = scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-524" ,"non-irradiated","Cobalt-60 gamma radiation",6)
+data["plant_noRad"],data["plant_rad"] = scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-520","non-irradiated","Cesium-137 gamma radiation",8)
