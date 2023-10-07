@@ -37,10 +37,10 @@ def scrape(url,label1,label2,end):
           if len(columns) >= 2:
             first_column = columns[0].get_text().strip()
             second_column = columns[end].get_text().strip()
-            if(second_column == label1):
-               non_irradiated.append(first_column)
-            else:
+            if(second_column == label2):
                irradiated.append(first_column)
+            else:
+               non_irradiated.append(first_column)
             string = first_column+" "+second_column
             x+=1
 
@@ -57,7 +57,7 @@ def scrape(url,label1,label2,end):
         soup = BeautifulSoup(page_source, 'html.parser')
         table = soup.find('table', {'class': 'mat-table cdk-table mat-elevation-z8 table-w100'})
         
-
+scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-466" ,"Ground","Space Flight",12)
 scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-524" ,"non-irradiated","Cobalt-60 gamma radiation",6)
 scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-520","non-irradiated","Cesium-137 gamma radiation",8)
 print("Irratiated")
