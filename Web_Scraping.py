@@ -1,51 +1,68 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
+non_irradiated = []
+irradiated = []
 
-# Set up the Selenium WebDriver (specify the path to your WebDriver executable)
-driver = webdriver.Chrome()
+    
+    
 
-# Navigate to the website
-url = "https://osdr.nasa.gov/bio/repo/data/studies/OSD-524"  # Replace with the URL of the dynamically loaded website
-driver.get(url)
+def scrape(url,label1,label2,end):
+    # Set up the Selenium WebDriver (specify the path to your WebDriver executable)
+    driver = webdriver.Chrome()
+    # Navigate to the website
+    driver.get(url)
 
-# Wait for a specific element to be loaded (you can customize this)
-wait = WebDriverWait(driver, 10)
-element = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'table')))
-data_files = []
-# Get the page source (including dynamically loaded content)
-page_source = driver.page_source
-soup = BeautifulSoup(page_source, 'html.parser')
-table = soup.find('table', {'class': 'mat-table cdk-table mat-elevation-z8 table-w100'})
-    # Extract and print the first and second columns
-x=0;
-while table:
-    print(table)
-    for row in table.find_all('tr'):
-      columns = row.find_all('td')
-      if len(columns) >= 2:
-        first_column = columns[0].get_text().strip()
-        second_column = columns[6].get_text().strip()
+    # Wait for a specific element to be loaded (you can customize this)
+    wait = WebDriverWait(driver, 2)
+    element = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'table')))
+    # Get the page source (including dynamically loaded content)
+    page_source = driver.page_source
+    soup = BeautifulSoup(page_source, 'html.parser')
+    table = ""
+        # Extract and print the first and second columns
+    x=0;
+    condition = True
+    x=26
+
+    while x>24:
+        x=0
+        table = soup.find('table', {'class': 'mat-table cdk-table mat-elevation-z8 table-w100'})
+        for row in table.find_all('tr'):
+          columns = row.find_all('td')
+          if len(columns) >= 2:
+            first_column = columns[0].get_text().strip()
+            second_column = columns[end].get_text().strip()
+            if(second_column == label1):
+               non_irradiated.append(first_column)
+            else:
+               irradiated.append(first_column)
+            string = first_column+" "+second_column
+            x+=1
+
+        try:
+            button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@class='mat-focus-indicator mat-tooltip-trigger mat-paginator-navigation-next mat-icon-button mat-button-base']")))
+            driver.execute_script("arguments[0].setAttribute('style', 'border: 2px solid red;');", button)
+            button.click()
         
-        string = first_column+" "+second_column
-        data_files.append(string)
-        x+=1
-        print(x)
-    for string in data_files:
-       print(string)
-    button = soup.find('button', {'class': 'mat-focus-indicator mat-tooltip-trigger mat-paginator-navigation-next mat-icon-button mat-button-base', 'aria-label': 'Next page'})
-    button.click()
-    table = soup.find('table', {'class': 'mat-table cdk-table mat-elevation-z8 table-w100'})
+        except Exception:
+            # Button is not clickable, exit the loop
+            break
+    
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        table = soup.find('table', {'class': 'mat-table cdk-table mat-elevation-z8 table-w100'})
+        
 
-# Close the WebDriver
-driver.quit()
-
-# Parse the page source with BeautifulSoup
-soup = BeautifulSoup(page_source, 'html.parser')
-
-# Now you can use BeautifulSoup to extract information from the parsed HTML
-# For example:
-# data = soup.find('div', {'class': 'your-class'})
+scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-524" ,"non-irradiated","Cobalt-60 gamma radiation",6)
+scrape("https://osdr.nasa.gov/bio/repo/data/studies/OSD-520","non-irradiated","Cesium-137 gamma radiation",8)
+print("Irratiated")
+for string in irradiated:
+   print(string)
+print("Non_irratiated")
+for string in non_irradiated:
+   print(string)
