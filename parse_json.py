@@ -3,7 +3,6 @@ from collections import defaultdict
 import pprint
 
 
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
@@ -11,10 +10,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
-
-
-    
-    
 
 def scrape(url,label1,label2,end):
     non_irradiated = []
@@ -32,7 +27,7 @@ def scrape(url,label1,label2,end):
     soup = BeautifulSoup(page_source, 'html.parser')
     table = ""
         # Extract and print the first and second columns
-    x=0;
+    x=0
     condition = True
     x=26
 
@@ -40,16 +35,16 @@ def scrape(url,label1,label2,end):
         x=0
         table = soup.find('table', {'class': 'mat-table cdk-table mat-elevation-z8 table-w100'})
         for row in table.find_all('tr'):
-          columns = row.find_all('td')
-          if len(columns) >= 2:
-            first_column = columns[1].get_text().strip()
-            second_column = columns[end].get_text().strip()
-            if(second_column == label2):
-               irradiated.append(first_column)
-            else:
-               non_irradiated.append(first_column)
-            string = first_column+" "+second_column
-            x+=1
+            columns = row.find_all('td')
+            if len(columns) >= 2:
+                first_column = columns[1].get_text().strip()
+                second_column = columns[end].get_text().strip()
+                if(second_column == label2):
+                    irradiated.append(first_column)
+                else:
+                    non_irradiated.append(first_column)
+                string = first_column+" "+second_column
+                x+=1
 
         try:
             button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@class='mat-focus-indicator mat-tooltip-trigger mat-paginator-navigation-next mat-icon-button mat-button-base']")))
