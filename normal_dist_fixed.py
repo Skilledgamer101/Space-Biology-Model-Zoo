@@ -25,7 +25,10 @@ for i in range(len(dict_list)):
         mean = np.mean(values)
         std_dev = np.std(values)
         
+<<<<<<< HEAD
         # ChatGPT was used to create line for normal distribution and num_samples
+=======
+>>>>>>> e39862b33e15e9e95d3accb8ca3ab14dac4e51ae
         # Data points for normal distribution (perfect normal distribution)
         num_samples = 1000  # Number of data points to generate
         generated_data = np.random.normal(mean, std_dev, num_samples)
@@ -47,7 +50,10 @@ for i in range(len(dict_list)):
         plt.legend()
         plt.show()
 '''
+<<<<<<< HEAD
 
+=======
+>>>>>>> e39862b33e15e9e95d3accb8ca3ab14dac4e51ae
 # Cohen's D. metric
 
 def cohen(dict1, dict2):
@@ -64,7 +70,11 @@ def cohen(dict1, dict2):
         mean_dict2 = np.mean(value_dict2)
         std_dict2 = np.std(value_dict2)
         
+<<<<<<< HEAD
         # Cohen's D --> P1(mean1,std1) and P2(mean2,std2) --> separability is (mean2-mean1)/(std1*std2)
+=======
+        # Class Separability --> P1(mean1,std1) and P2(mean2,std2) --> separability is (mean2-mean1)/(std1*std2)
+>>>>>>> e39862b33e15e9e95d3accb8ca3ab14dac4e51ae
         separability = (mean_dict2-mean_dict1)/(std_dict1*std_dict2)
         difference.append(separability)
         
