@@ -17,7 +17,7 @@ dict_list = [mice_basal_dict, mice_space_dict, zebrafish_basal_dict, zebrafish_s
 
 
 # Loop through key value pairs and create normal distribution
-# Plot for every key:value pair of every dictionary
+# Plotting every normal distribution for every key:value pair in every dictionary
 '''
 for i in range(len(dict_list)):
     for key, values in dict_list[i].items():
@@ -72,6 +72,7 @@ mice_difference = separability(mice_basal_dict,mice_space_dict)
 zebra_difference = separability(zebrafish_basal_dict,zebrafish_space_dict)
 plant_difference = separability(plants_basal_dict,plants_space_dict)
 
+# Separability values between -1 and 1 
 for i in range(4):
     print(f"The difference of key{i} is {mice_difference[i]} ")
     print(f"The difference of key{i} is {zebra_difference[i]} ")
