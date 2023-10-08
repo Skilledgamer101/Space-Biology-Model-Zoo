@@ -25,6 +25,7 @@ for i in range(len(dict_list)):
         mean = np.mean(values)
         std_dev = np.std(values)
         
+        # ChatGPT was used to create line for normal distribution and num_samples
         # Data points for normal distribution (perfect normal distribution)
         num_samples = 1000  # Number of data points to generate
         generated_data = np.random.normal(mean, std_dev, num_samples)
