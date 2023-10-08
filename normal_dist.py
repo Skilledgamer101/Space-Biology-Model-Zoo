@@ -1,7 +1,7 @@
 import matplotlib
 from matplotlib import pyplot as plt
 import numpy as np
-from scipy.stats import norm  # Import the normal distribution module
+from scipy.stats import norm  # Import the normal distribution module with the 'trendline'
 import parse_json
 
 
@@ -46,9 +46,9 @@ for i in range(len(dict_list)):
         plt.legend()
         plt.show()
 '''
-# Separability metric
+# Cohen's D. metric
 
-def separability(dict1, dict2):
+def cohen(dict1, dict2):
     keys_list = list(dict1.keys())
     difference = []
     for i in range(4):
@@ -68,15 +68,18 @@ def separability(dict1, dict2):
         
     return difference
 
-mice_difference = separability(mice_basal_dict,mice_space_dict)
-zebra_difference = separability(zebrafish_basal_dict,zebrafish_space_dict)
-plant_difference = separability(plants_basal_dict,plants_space_dict)
+mice_difference = cohen(mice_basal_dict,mice_space_dict)
+zebra_difference = cohen(zebrafish_basal_dict,zebrafish_space_dict)
+plant_difference = cohen(plants_basal_dict,plants_space_dict)
 
-# Separability values between -1 and 1 
+
+# Cohen's D. values between -1 and 1 
 for i in range(4):
-    print(f"The difference of key{i} is {mice_difference[i]} ")
-    print(f"The difference of key{i} is {zebra_difference[i]} ")
-    print(f"The difference of key{i} is {plant_difference[i]} ")
+    key = ['percent_AT', 'percent_duplicates of DNA', 'percent_GC', 'total_sequences']
+    print(f"The Cohen's D. value of {key[i]} for mice is {mice_difference[i]} ")
+    print(f"The Cohen's D. value of {key[i]} for zebra fish is {zebra_difference[i]} ")
+    print(f"The Cohen's D. of {key[i]} for plants is {plant_difference[i]} ")
+    
 
 
 
