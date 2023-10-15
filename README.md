@@ -13,7 +13,6 @@ pip install matplotlib
 
 ## Contributors
 [Ronav Roy Chowdhury](https://github.com/Swwwerve) ---
-	---
 [Daniel Oliveira](https://github.com/GriDaniel) ---
 [Mansoor Lunawadi](https://github.com/Skilledgamer101) ---
-[Andrew Chen](https://github.com/Achen2804) ---
+[Andrew Chen](https://github.com/Achen2804)
