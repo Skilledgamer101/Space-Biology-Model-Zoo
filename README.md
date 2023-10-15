@@ -9,8 +9,7 @@ creating normal distributions and comparing them using Cohen's D., and then crea
 
 ## Install Dependencies
 ### Web Scraping
-pip install Selenium
-pip install BeautifulSoup4
+pip install Selenium BeautifulSoup4
 ### Interpreting Arrays
 pip install numpy
 ### Normal Distribution Plots
